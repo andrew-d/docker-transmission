@@ -30,7 +30,4 @@ VOLUME ["/opt/transmission/incomplete"]
 EXPOSE 9091
 EXPOSE 12345
 
-# Run everything as the 'transmission' user
-USER transmission
-
 CMD ["/run-transmission.sh"]
