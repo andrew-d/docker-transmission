@@ -18,7 +18,7 @@ docker run \
     -p 127.0.0.1:9091:9091 \
     -v /local/path/to/downloads:/opt/transmission/downloads \
     -v /local/path/to/incomplete:/opt/transmission/incomplete \
-    andrew-d/transmission
+    andrewd/transmission
 ```
 
 You can control the running Transmission daemon using `transmission-remote`.
