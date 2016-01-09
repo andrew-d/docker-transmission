@@ -1,8 +1,11 @@
 FROM alpine:3.3
 MAINTAINER Andrew Dunham <andrew@du.nham.ca>
 
-# Install transmission
-RUN apk add -U transmission-cli transmission-daemon
+# Install transmission and dumb-init
+RUN apk add -U transmission-cli transmission-daemon && \
+    wget -O /usr/local/bin/dumb-init \
+        https://github.com/Yelp/dumb-init/releases/download/v1.0.0/dumb-init_1.0.0_amd64 && \
+    chmod +x /usr/local/bin/dumb-init
 
 # Copy the files to the image
 ADD ./files/ /tmp/
@@ -20,7 +23,7 @@ RUN mkdir -p /etc/transmission && \
     mv /tmp/run-transmission.sh /run-transmission.sh && \
     chown -R transmission:transmission /opt/transmission && \
     chown -R transmission:transmission /etc/transmission && \
-    rm -rf /tmp/* /var/cache/apk/* 
+    rm -rf /tmp/* /var/cache/apk/*
 
 # Set up the volumes
 VOLUME ["/opt/transmission/downloads"]
@@ -30,4 +33,4 @@ VOLUME ["/opt/transmission/incomplete"]
 EXPOSE 9091
 EXPOSE 12345
 
-CMD ["/run-transmission.sh"]
+CMD ["/usr/local/bin/dumb-init", "/run-transmission.sh"]
