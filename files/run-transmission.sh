@@ -35,9 +35,13 @@ sed -E \
     -e "s|transmission:x:(\\d*):(\\d*)|transmission:x:$l_USER_ID:$l_GROUP_ID|" \
     /etc/passwd
 
+echo "Changing ownership of the config dir ($CONFIG_DIR)..."
+chown -R $l_USER_ID:$l_GROUP_ID $CONFIG_DIR
+
 unset l_USER_ID l_GROUP_ID USER_ID GROUP_ID
 
 # Run the command as the transmission user
+echo "Running transmission..."
 exec su -s /bin/sh -c 'exec "$0" "$@"' transmission -- \
     $TRANSMISSION \
         --config-dir "$CONFIG_DIR" \

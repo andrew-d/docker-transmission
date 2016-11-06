@@ -1,10 +1,10 @@
-FROM alpine:3.3
+FROM alpine:3.4
 MAINTAINER Andrew Dunham <andrew@du.nham.ca>
 
 # Install transmission and dumb-init
-RUN apk add -U transmission-cli transmission-daemon && \
-    wget -O /usr/local/bin/dumb-init \
-        https://github.com/Yelp/dumb-init/releases/download/v1.0.0/dumb-init_1.0.0_amd64 && \
+RUN apk add -U transmission-cli transmission-daemon curl ca-certificates && \
+    curl -L -o /usr/local/bin/dumb-init \
+        https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 && \
     chmod +x /usr/local/bin/dumb-init
 
 # Copy the files to the image
